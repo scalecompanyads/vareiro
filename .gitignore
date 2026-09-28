@@ -1,0 +1,11 @@
+# materiais brutos do cliente (não publicados)
+/*.pdf
+/*.jpg
+/*.png
+/*.PNG
+.vscode/
+
+# originais em alta resolução — as páginas usam as versões .webp
+lp-*/assets/desktop-hero-bg.png
+lp-*/assets/fernando-vareiro.png
+lp-*/assets/joao-paulo-haddad.png
