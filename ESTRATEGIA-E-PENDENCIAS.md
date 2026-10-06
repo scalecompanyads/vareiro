@@ -60,7 +60,7 @@ A copy final está nos arquivos `index.html`.
 
 **Pronto**
 - GTM instalado no `<head>` e no `<body>` (noscript), com o ID correto em cada LP.
-- Links `wa.me/5565996302294` com a mensagem codificada. Funcionam mesmo com o JS desligado.
+- Links `wa.me/556592383739` com a mensagem codificada. Funcionam mesmo com o JS desligado.
 - Evento `dataLayer` a cada clique: `{event:'clique_whatsapp', lp:'…', cta_posicao:'hero|identificacao|documentos|consequencias|final'}`. No GTM, criar um acionador de Evento personalizado `clique_whatsapp` e ligar à conversão do Ads ou do GA4.
 - Meta title, description e OG; favicon; imagens otimizadas (logo com 12KB, fotos entre 20 e 38KB).
 - Rodapé com os nomes, as OABs e o aviso "caráter informativo, não constitui promessa de resultado".
