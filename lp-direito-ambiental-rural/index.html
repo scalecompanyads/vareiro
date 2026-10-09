@@ -86,6 +86,21 @@ section{padding:clamp(64px,9vw,104px) 0}
 .scope p{font-size:10.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#B3BDCD;margin-bottom:5px}
 .scope ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:3px 18px;font-size:13.5px;font-weight:500;color:#EEF1F6}
 .scope li{white-space:nowrap}
+/* hero mobile: foto no topo, conteúdo centralizado, tudo nos primeiros 100vh */
+@media(max-width:600px){
+  .hero{align-items:flex-start;padding:62vw 0 24px;background:var(--navy-deep) url(assets/hero-bg-mobile.webp) right top/135% auto no-repeat}
+  .hero::before{background:linear-gradient(180deg,rgba(12,23,43,0) 0,rgba(12,23,43,0) 40vw,rgba(12,23,43,.85) 62vw,var(--navy-deep) 76vw)}
+  .hero .wrap{gap:14px;justify-items:center;text-align:center}
+  .hero .wrap > *{max-width:100%}
+  .hero .brand{margin-bottom:2px}
+  .hero .brand img{height:40px}
+  .hero .brand span{font-size:17px;text-align:left}
+  .hero h1{font-size:clamp(25px,7.4vw,30px)}
+  .hero .lead{font-size:15px;line-height:1.5}
+  .hero .scope{display:none}
+  .hero .wrap > div:last-child{width:100%}
+}
+@media(max-width:560px){.btn{font-size:15px;white-space:nowrap}.hide-sm{display:none}}
 
 /* identificação */
 .ident{background:var(--cream)}
@@ -307,7 +322,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
       <div>
         <a class="btn js-wa" data-pos="hero" href="https://wa.me/556592383739?text=Ol%C3%A1%2C%20vi%20a%20p%C3%A1gina%20sobre%20Direito%20Ambiental%20Rural%20e%20gostaria%20de%20informa%C3%A7%C3%B5es." target="_blank" rel="noopener">
-          <svg aria-hidden="true"><use href="#i-wa"/></svg>Entenda sua situação ambiental
+          <svg aria-hidden="true"><use href="#i-wa"/></svg><span>Entenda sua situação<span class="hide-sm"> ambiental</span></span>
         </a>
       </div>
     </div>
@@ -350,7 +365,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
       <div class="after-cards">
         <p>Se você se reconheceu em algum desses pontos, o primeiro passo é entender o que foi determinado e em que estágio está o procedimento.</p>
-        <a class="btn js-wa" data-pos="identificacao" href="https://wa.me/556592383739?text=Ol%C3%A1%2C%20vi%20a%20p%C3%A1gina%20sobre%20Direito%20Ambiental%20Rural%20e%20gostaria%20de%20informa%C3%A7%C3%B5es." target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-wa"/></svg>Entenda sua situação ambiental</a>
+        <a class="btn js-wa" data-pos="identificacao" href="https://wa.me/556592383739?text=Ol%C3%A1%2C%20vi%20a%20p%C3%A1gina%20sobre%20Direito%20Ambiental%20Rural%20e%20gostaria%20de%20informa%C3%A7%C3%B5es." target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-wa"/></svg><span>Entenda sua situação<span class="hide-sm"> ambiental</span></span></a>
       </div>
     </div>
   </section>
@@ -382,7 +397,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <h2>O que pode ser útil separar</h2>
         <p class="lead">Conforme o caso, poderão ser necessários os documentos ao lado. Se você não sabe exatamente qual documento recebeu, tudo bem: envie o que tiver em mãos no primeiro contato.</p>
         <div style="margin-top:12px">
-          <a class="btn js-wa" data-pos="documentos" href="https://wa.me/556592383739?text=Ol%C3%A1%2C%20vi%20a%20p%C3%A1gina%20sobre%20Direito%20Ambiental%20Rural%20e%20gostaria%20de%20informa%C3%A7%C3%B5es." target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-wa"/></svg>Entenda sua situação ambiental</a>
+          <a class="btn js-wa" data-pos="documentos" href="https://wa.me/556592383739?text=Ol%C3%A1%2C%20vi%20a%20p%C3%A1gina%20sobre%20Direito%20Ambiental%20Rural%20e%20gostaria%20de%20informa%C3%A7%C3%B5es." target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-wa"/></svg><span>Entenda sua situação<span class="hide-sm"> ambiental</span></span></a>
         </div>
       </div>
       <ul class="doclist">
@@ -411,7 +426,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <li><span class="risk-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4M12 17h.01"/></svg></span><strong>Impacto sobre a atividade produtiva</strong><span>Quando a restrição alcança a área ou a operação da propriedade.</span></li>
       </ul>
       <p class="fine">As consequências variam conforme o órgão, o tipo de autuação e o estágio do procedimento. Por isso, cada caso precisa ser analisado individualmente.</p>
-      <div class="alert-cta"><a class="btn js-wa" data-pos="consequencias" href="https://wa.me/556592383739?text=Ol%C3%A1%2C%20vi%20a%20p%C3%A1gina%20sobre%20Direito%20Ambiental%20Rural%20e%20gostaria%20de%20informa%C3%A7%C3%B5es." target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-wa"/></svg>Entenda sua situação ambiental</a></div>
+      <div class="alert-cta"><a class="btn js-wa" data-pos="consequencias" href="https://wa.me/556592383739?text=Ol%C3%A1%2C%20vi%20a%20p%C3%A1gina%20sobre%20Direito%20Ambiental%20Rural%20e%20gostaria%20de%20informa%C3%A7%C3%B5es." target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-wa"/></svg><span>Entenda sua situação<span class="hide-sm"> ambiental</span></span></a></div>
     </div>
   </section>
 
@@ -472,7 +487,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
       <div class="team-cta">
         <p>Apresente sua situação pelo WhatsApp e receba as orientações iniciais.</p>
-        <a class="btn js-wa" data-pos="final" href="https://wa.me/556592383739?text=Ol%C3%A1%2C%20vi%20a%20p%C3%A1gina%20sobre%20Direito%20Ambiental%20Rural%20e%20gostaria%20de%20informa%C3%A7%C3%B5es." target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-wa"/></svg>Entenda sua situação ambiental</a>
+        <a class="btn js-wa" data-pos="final" href="https://wa.me/556592383739?text=Ol%C3%A1%2C%20vi%20a%20p%C3%A1gina%20sobre%20Direito%20Ambiental%20Rural%20e%20gostaria%20de%20informa%C3%A7%C3%B5es." target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-wa"/></svg><span>Entenda sua situação<span class="hide-sm"> ambiental</span></span></a>
       </div>
     </div>
   </section>
