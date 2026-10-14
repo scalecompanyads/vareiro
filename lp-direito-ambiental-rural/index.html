@@ -293,6 +293,53 @@ footer p{max-width:820px}
   .brand span{font-size:16px}
 }
 @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+/* modal do formulário de lead */
+body.lm-lock{overflow:hidden}
+.lead-modal{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;padding:20px}
+.lead-modal[hidden]{display:none}
+.lm-backdrop{position:absolute;inset:0;background:rgba(8,15,29,.72);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);animation:lm-fade .2s ease}
+.lm-panel{position:relative;width:100%;max-width:460px;max-height:calc(100svh - 40px);overflow:auto;background:var(--paper);color:var(--ink);border-radius:22px;padding:30px 28px 24px;box-shadow:0 30px 80px -20px rgba(0,0,0,.55);animation:lm-in .25s ease}
+.lm-close{position:absolute;top:12px;right:12px;width:40px;height:40px;border-radius:50%;border:0;background:transparent;color:var(--muted);font-size:26px;line-height:1;cursor:pointer;display:grid;place-items:center}
+.lm-close:hover{background:var(--cream);color:var(--ink)}
+.lm-close:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.lm-panel .eyebrow{display:block;margin-bottom:8px}
+.lm-panel h2{font-size:26px;margin-bottom:6px;padding-right:32px}
+.lm-sub{color:var(--muted);font-size:15px;margin-bottom:20px}
+.lead-form{display:grid;gap:16px}
+.fld{display:grid;gap:6px}
+.fld-label{font-size:14px;font-weight:600;color:var(--ink)}
+.fld input[type=text],.fld input[type=tel],.sel-btn{width:100%;min-height:52px;padding:13px 16px;border:1.5px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);font:inherit;font-size:16px;transition:border-color .15s,box-shadow .15s}
+.fld input::placeholder{color:#9AA2AF}
+.fld input:focus,.sel-btn:focus-visible,.sel.open .sel-btn{outline:0;border-color:var(--gold);box-shadow:0 0 0 4px rgba(201,166,107,.22)}
+.fld.invalid input,.fld.invalid .sel-btn{border-color:#C2410C}
+.fld-err{font-size:13px;color:#C2410C;display:none}
+.fld.invalid .fld-err{display:block}
+.sel{position:relative}
+.sel-btn{display:flex;align-items:center;justify-content:space-between;gap:12px;text-align:left;cursor:pointer}
+.sel-val{flex:1;line-height:1.35}
+.sel-val.is-ph{color:#9AA2AF}
+.sel-btn svg{flex:none;width:18px;height:18px;fill:none;stroke:var(--gold-text);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;transition:transform .2s}
+.sel.open .sel-btn svg{transform:rotate(180deg)}
+.sel-list{margin:6px 0 0;padding:6px;list-style:none;background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 22px 44px -18px rgba(19,34,61,.45);max-height:288px;overflow:auto;overscroll-behavior:contain}
+.sel-list[hidden]{display:none}
+.sel-list li{display:flex;align-items:flex-start;gap:10px;padding:11px 12px;border-radius:10px;font-size:15px;line-height:1.4;cursor:pointer;color:var(--ink)}
+.sel-list li::before{content:"";flex:none;width:16px;height:16px;margin-top:2px;border-radius:50%;border:1.5px solid #C9CED6;transition:all .15s}
+.sel-list li.active{background:var(--cream)}
+.sel-list li[aria-selected=true]{font-weight:600}
+.sel-list li[aria-selected=true]::before{border:5px solid var(--gold);background:#fff}
+.lead-form .btn{width:100%;margin-top:4px}
+.lead-form .btn[disabled]{opacity:.7;cursor:wait;transform:none}
+.lm-note{font-size:12.5px;color:var(--muted);text-align:center;margin-top:-4px}
+@keyframes lm-fade{from{opacity:0}}
+@keyframes lm-in{from{opacity:0;transform:translateY(12px)}}
+@media(max-width:560px){
+  .lead-modal{align-items:flex-end;padding:0}
+  .lm-panel{max-width:none;max-height:94svh;border-radius:22px 22px 0 0;padding:26px 20px calc(20px + env(safe-area-inset-bottom))}
+  .lm-panel h2{font-size:23px}
+  .sel-list{max-height:min(288px,42svh)}
+  @keyframes lm-in{from{transform:translateY(40px);opacity:0}}
+}
+@media(prefers-reduced-motion:reduce){.lm-backdrop,.lm-panel{animation:none}}
 </style>
 </head>
 <body>
@@ -506,16 +553,204 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 </footer>
 
+<!-- FORMULÁRIO DE LEAD (abre ao clicar em qualquer botão de WhatsApp) -->
+<div class="lead-modal" id="lead-modal" role="dialog" aria-modal="true" aria-labelledby="lm-title" hidden>
+  <div class="lm-backdrop" data-close></div>
+  <div class="lm-panel">
+    <button type="button" class="lm-close" data-close aria-label="Fechar">&times;</button>
+    <span class="eyebrow">Direito Ambiental Rural</span>
+    <h2 id="lm-title">Fale com a equipe</h2>
+    <p class="lm-sub">Preencha os dados abaixo e continue o atendimento pelo WhatsApp.</p>
+    <form class="lead-form" id="lead-form" novalidate>
+      <label class="fld">
+        <span class="fld-label">Nome</span>
+        <input type="text" name="nome" autocomplete="name" placeholder="Seu nome completo" required>
+        <span class="fld-err">Informe seu nome.</span>
+      </label>
+      <label class="fld">
+        <span class="fld-label">Telefone (WhatsApp)</span>
+        <input type="tel" name="whatsapp" inputmode="numeric" autocomplete="tel-national" placeholder="(65) 99999-9999" maxlength="16" required>
+        <span class="fld-err">Informe um telefone com DDD.</span>
+      </label>
+      <div class="fld">
+        <span class="fld-label" id="sit-label">Qual situação você está enfrentando?</span>
+        <div class="sel" id="sit-sel">
+          <input type="hidden" name="situacao">
+          <button type="button" class="sel-btn" aria-haspopup="listbox" aria-expanded="false" aria-controls="sit-list" aria-labelledby="sit-label sit-val">
+            <span class="sel-val is-ph" id="sit-val">Selecione uma opção</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <ul class="sel-list" id="sit-list" role="listbox" aria-labelledby="sit-label" tabindex="-1" hidden>
+            <li role="option" id="sit-o1" aria-selected="false" data-value="Recebi um Auto de Infração Ambiental">Recebi um Auto de Infração Ambiental</li>
+            <li role="option" id="sit-o2" aria-selected="false" data-value="Recebi uma multa ambiental">Recebi uma multa ambiental</li>
+            <li role="option" id="sit-o3" aria-selected="false" data-value="Minha propriedade ou área foi embargada">Minha propriedade ou área foi embargada</li>
+            <li role="option" id="sit-o4" aria-selected="false" data-value="Estou respondendo a processo administrativo ambiental">Estou respondendo a processo administrativo ambiental</li>
+            <li role="option" id="sit-o5" aria-selected="false" data-value="Uma restrição ambiental está prejudicando a produção">Uma restrição ambiental está prejudicando a produção</li>
+            <li role="option" id="sit-o6" aria-selected="false" data-value="Existe cobrança ou execução relacionada à multa ambiental">Existe cobrança ou execução relacionada à multa ambiental</li>
+            <li role="option" id="sit-o7" aria-selected="false" data-value="Recebi uma notificação de órgão ambiental">Recebi uma notificação de órgão ambiental</li>
+            <li role="option" id="sit-o8" aria-selected="false" data-value="Outra situação ambiental">Outra situação ambiental</li>
+          </ul>
+        </div>
+        <span class="fld-err">Selecione uma situação.</span>
+      </div>
+      <button class="btn" type="submit"><svg aria-hidden="true"><use href="#i-wa"/></svg><span>Continuar no WhatsApp</span></button>
+      <p class="lm-note">Seus dados são usados apenas para o retorno do escritório.</p>
+    </form>
+  </div>
+</div>
+
 <script>
-(function(){
-  var links = document.querySelectorAll('.js-wa');
-  for (var i = 0; i < links.length; i++) {
-    links[i].addEventListener('click', function(){
-      window.dataLayer = window.dataLayer || [];
-      window.dataLayer.push({event:'clique_whatsapp', lp:'direito-ambiental-rural', cta_posicao:this.getAttribute('data-pos')});
-    });
+document.addEventListener('DOMContentLoaded', function () {
+  var LEAD_ENDPOINT = 'https://hook.us1.make.com/jvgr1j7368mhfbhtklmc8os3ms2bwitp';
+  var WHATSAPP_NUMBER = '556592383739';
+  var LP = 'direito-ambiental-rural';
+  var isQualified = function (data) { return true; };
+
+  // UTMs: guarda as da primeira página da visita
+  var UTM_KEYS = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','gclid','fbclid'];
+  var params = new URLSearchParams(location.search);
+  var stored = {};
+  try { stored = JSON.parse(sessionStorage.getItem('lead_tracking') || '{}'); } catch (e) {}
+  var fromUrl = {};
+  UTM_KEYS.forEach(function (k) { if (params.get(k)) fromUrl[k] = params.get(k); });
+  var tracking = Object.keys(fromUrl).length ? fromUrl : stored;
+  try { sessionStorage.setItem('lead_tracking', JSON.stringify(tracking)); } catch (e) {}
+
+  var modal = document.getElementById('lead-modal');
+  var form = document.getElementById('lead-form');
+  var lastTrigger = null;
+  window.dataLayer = window.dataLayer || [];
+
+  // abrir / fechar o modal
+  function openModal(trigger) {
+    lastTrigger = trigger;
+    modal.hidden = false;
+    document.body.classList.add('lm-lock');
+    setTimeout(function () { form.elements.nome.focus(); }, 50);
   }
-})();
+  function closeModal() {
+    closeList();
+    modal.hidden = true;
+    document.body.classList.remove('lm-lock');
+    if (lastTrigger) lastTrigger.focus();
+  }
+  document.querySelectorAll('.js-wa').forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      e.preventDefault();
+      window.dataLayer.push({event:'clique_whatsapp', lp:LP, cta_posicao:a.getAttribute('data-pos')});
+      openModal(a);
+    });
+  });
+  modal.querySelectorAll('[data-close]').forEach(function (el) { el.addEventListener('click', closeModal); });
+  modal.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') { if (sel.classList.contains('open')) { closeList(); btn.focus(); } else closeModal(); }
+    if (e.key === 'Tab') {
+      var f = Array.prototype.filter.call(modal.querySelectorAll('button,input:not([type=hidden])'), function (el) { return el.offsetParent; });
+      if (e.shiftKey && document.activeElement === f[0]) { e.preventDefault(); f[f.length - 1].focus(); }
+      else if (!e.shiftKey && document.activeElement === f[f.length - 1]) { e.preventDefault(); f[0].focus(); }
+    }
+  });
+
+  // seletor estilizado
+  var sel = document.getElementById('sit-sel');
+  var btn = sel.querySelector('.sel-btn');
+  var list = sel.querySelector('.sel-list');
+  var val = sel.querySelector('.sel-val');
+  var hidden = sel.querySelector('input[name=situacao]');
+  var opts = Array.prototype.slice.call(list.querySelectorAll('[role=option]'));
+  var active = -1;
+  function setActive(i) {
+    active = Math.max(0, Math.min(opts.length - 1, i));
+    opts.forEach(function (o, j) { o.classList.toggle('active', j === active); });
+    list.setAttribute('aria-activedescendant', opts[active].id);
+    opts[active].scrollIntoView({block:'nearest'});
+  }
+  function openList() {
+    sel.classList.add('open'); list.hidden = false; btn.setAttribute('aria-expanded', 'true');
+    var cur = opts.findIndex(function (o) { return o.getAttribute('aria-selected') === 'true'; });
+    setActive(cur < 0 ? 0 : cur);
+    list.focus({preventScroll:true});
+    list.scrollIntoView({block:'nearest', behavior:'smooth'});
+  }
+  function closeList() {
+    sel.classList.remove('open'); list.hidden = true; btn.setAttribute('aria-expanded', 'false');
+  }
+  function choose(i) {
+    opts.forEach(function (o, j) { o.setAttribute('aria-selected', j === i ? 'true' : 'false'); });
+    hidden.value = opts[i].getAttribute('data-value');
+    val.textContent = hidden.value; val.classList.remove('is-ph');
+    sel.closest('.fld').classList.remove('invalid');
+    closeList(); btn.focus();
+  }
+  btn.addEventListener('click', function () { sel.classList.contains('open') ? closeList() : openList(); });
+  btn.addEventListener('keydown', function (e) {
+    if (['ArrowDown','ArrowUp','Enter',' '].indexOf(e.key) > -1) { e.preventDefault(); openList(); }
+  });
+  list.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowDown') { e.preventDefault(); setActive(active + 1); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); setActive(active - 1); }
+    else if (e.key === 'Home') { e.preventDefault(); setActive(0); }
+    else if (e.key === 'End') { e.preventDefault(); setActive(opts.length - 1); }
+    else if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); choose(active); }
+    else if (e.key === 'Tab') { closeList(); }
+  });
+  opts.forEach(function (o, i) {
+    o.addEventListener('click', function () { choose(i); });
+    o.addEventListener('mousemove', function () { if (active !== i) setActive(i); });
+  });
+  document.addEventListener('click', function (e) { if (!sel.contains(e.target)) closeList(); });
+
+  // máscara do telefone: (65) 99999-9999
+  var tel = form.elements.whatsapp;
+  tel.addEventListener('input', function () {
+    var d = tel.value.replace(/\D/g, '').replace(/^55(?=\d{10,11}$)/, '').slice(0, 11);
+    var out = d;
+    if (d.length > 2) out = '(' + d.slice(0, 2) + ') ' + d.slice(2);
+    if (d.length > 6) out = '(' + d.slice(0, 2) + ') ' + d.slice(2, d.length - 4) + '-' + d.slice(-4);
+    tel.value = out;
+  });
+
+  // validação
+  function check() {
+    var ok = true;
+    var fName = form.elements.nome, digits = tel.value.replace(/\D/g, '');
+    var rules = [[fName, fName.value.trim().length >= 2], [tel, digits.length >= 10 && digits.length <= 11], [btn, !!hidden.value]];
+    rules.forEach(function (r) { r[0].closest('.fld').classList.toggle('invalid', !r[1]); if (!r[1] && ok) { ok = false; r[0].focus(); } });
+    return ok;
+  }
+  form.querySelectorAll('input').forEach(function (i) { i.addEventListener('input', function () { i.closest('.fld').classList.remove('invalid'); }); });
+
+  // envio: Make (form-urlencoded + no-cors) e redireciona para o WhatsApp
+  var sending = false;
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    if (sending || !check()) return;
+    sending = true;
+    var submitBtn = form.querySelector('[type=submit]');
+    submitBtn.disabled = true;
+
+    var data = { nome: form.elements.nome.value.trim(), whatsapp: tel.value, situacao: hidden.value };
+    var qualificado = isQualified(data);
+    var lead = Object.assign({}, data, {
+      whatsapp: '55' + tel.value.replace(/\D/g, ''),
+      qualificado: qualificado ? 'Sim' : 'Não',
+      referrer: document.referrer,
+      pagina: location.href,
+      enviado_em: new Date().toISOString()
+    });
+    UTM_KEYS.forEach(function (k) { lead[k] = tracking[k] || ''; });
+
+    try {
+      await fetch(LEAD_ENDPOINT, { method: 'POST', mode: 'no-cors', keepalive: true, body: new URLSearchParams(lead) });
+    } catch (err) { console.error(err); }
+
+    window.dataLayer.push({event:'lead_enviado', lp:LP, situacao:lead.situacao});
+
+    var msg = 'Olá! Sou ' + lead.nome + ' e vi a página sobre Direito Ambiental Rural. Minha situação: ' + lead.situacao + '.';
+    location.href = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(msg);
+    setTimeout(function () { sending = false; submitBtn.disabled = false; }, 3000);
+  });
+});
 </script>
 </body>
 </html>
